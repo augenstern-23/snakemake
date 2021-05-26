@@ -1,0 +1,20 @@
+workflow:
+
+
+They are interested in:
+• the assembled sequences
+• a phylogeny
+• regions of high and/or low sequence variability
+
+
+
+The deliverables are:
+• fasta file with the assembled genome for each sequenced strain
+• phylogenetic tree in Newick format and visualised in pdf or png format
+• text file containing the average sequence variability for each window of length x (x should be a parameter of your workflow)
+• plot showing the variability along the sequenced genome (x-axis: genome position, y-axis: variability)
+
+
+Questions that have to be adressed:
+• reference based assembly or de-novo assembly?
+• how to measure sequence variability of a single sequence position?

@@ -1,0 +1,6 @@
+index: resources/reference_index/index
+samples: config/samples.tsv
+
+params:
+  bowtie2_sensitive: --very-sensitive
+  bowtie2_n: -N 1

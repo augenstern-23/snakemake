@@ -1,0 +1,34 @@
+from snakemake.utils import min_version
+import pandas as pd
+
+##### set minimum snakemake version #####
+min_version("5.12.0")
+
+#### load config file ####
+configfile: "config/config.yaml"
+
+#### load samples into table ####
+samples = pd.read_csv(config["samples"], index_col="sample", sep="\t")
+
+#### list all samples ####
+expand("stats/{sample}.stats", sample=list(samples.index))
+
+#### access files for samples ####
+r1 = lambda wildcards: samples.at[wildcards.sample,"fq1"]
+
+#### load rules ####
+include: "rules/bowtie.smk"
+include: "rules/samtools.smk"
+include: "rules/avg_depth_py.smk"
+include: "rules/qc.smk"
+
+
+##### target rule #####
+
+rule all:
+    input:
+        expand("results/stats/{sample}_avg_depth.bam.idxstats", sample=list(samples.index)),
+        expand("results/qc/fastqc/{sample}.html", sample=list(samples.index)),
+        expand("results/qc/fastqc/{sample}_trimmed.html", sample=list(samples.index)),
+        expand("results/qc/qualimap_{sample}", sample=list(samples.index)),
+        expand("results/qc/multiqc/{sample}_multiqc.html", sample=list(samples.index))
